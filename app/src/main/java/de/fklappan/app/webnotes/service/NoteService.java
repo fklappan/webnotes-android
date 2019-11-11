@@ -22,7 +22,10 @@ public class NoteService implements NoteRepository{
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new AuthenticationInterceptor())
+                .addInterceptor(interceptor)
+                .build();
 
         // TODO: 07.05.2019 url should be provided by app settings
         Retrofit retrofit = new Retrofit.Builder()
@@ -30,7 +33,6 @@ public class NoteService implements NoteRepository{
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-
                 .build();
 
         noteApi = retrofit.create(NoteApi.class);

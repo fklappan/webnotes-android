@@ -20,6 +20,8 @@ android {
         }
         buildTypes.each {
             it.buildConfigField 'String', 'SERVICE_URL', serviceUrl
+            it.buildConfigField 'String', 'USER', serviceUser
+            it.buildConfigField 'String', 'PASSWORD', servicePassword
         }
     }
     compileOptions {
