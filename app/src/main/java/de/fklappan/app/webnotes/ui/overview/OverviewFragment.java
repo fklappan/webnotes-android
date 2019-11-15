@@ -15,11 +15,10 @@ import javax.inject.Inject;
 import de.fklappan.app.webnotes.R;
 import de.fklappan.app.webnotes.common.BaseFragment;
 import de.fklappan.app.webnotes.common.logging.Logger;
+import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator;
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider;
 import de.fklappan.app.webnotes.model.Note;
 import de.fklappan.app.webnotes.service.NoteService;
-
-import static de.fklappan.app.webnotes.common.Parameters.EXTRA_NOTE_ID;
 
 public class OverviewFragment extends BaseFragment implements OverviewContract.Listener {
 
@@ -36,6 +35,8 @@ public class OverviewFragment extends BaseFragment implements OverviewContract.L
     Logger logger;
     @Inject
     SchedulerProvider schedulers;
+    @Inject
+    NoteFlowCoordinator noteFlowCoordinator;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // android overrides
@@ -72,15 +73,13 @@ public class OverviewFragment extends BaseFragment implements OverviewContract.L
     @Override
     public void onNoteClicked(Note note) {
         Log.d(LOG_TAG, "onNoteClicked: " + note.getTitle());
-        Bundle bundle = new Bundle();
-        bundle.putLong(EXTRA_NOTE_ID, note.getId());
-        Navigation.findNavController(getView()).navigate(R.id.action_overviewFragment_to_detailFragment, bundle);
+        noteFlowCoordinator.showNote(note.getId());
     }
 
     @Override
     public void onAddClicked() {
         Log.d(LOG_TAG, "onAddClicked");
-        Navigation.findNavController(getView()).navigate(R.id.action_overviewFragment_to_addFragment);
+        noteFlowCoordinator.addNote();
     }
 
     @Override

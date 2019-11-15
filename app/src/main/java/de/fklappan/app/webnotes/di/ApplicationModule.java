@@ -9,6 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import de.fklappan.app.webnotes.common.logging.AndroidLoggerImpl;
 import de.fklappan.app.webnotes.common.logging.Logger;
+import de.fklappan.app.webnotes.common.navigation.Navigator;
 import de.fklappan.app.webnotes.common.rx.AppSchedulers;
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider;
 
@@ -46,4 +47,9 @@ public class ApplicationModule {
         return impl;
     }
 
+    @Provides
+    @Singleton
+    Navigator provideNavigator() {
+        return new Navigator();
+    }
 }

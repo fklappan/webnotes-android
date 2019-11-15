@@ -6,6 +6,7 @@ import de.fklappan.app.webnotes.ui.detail.DetailFragment;
 import de.fklappan.app.webnotes.ui.edit.EditFragment;
 import de.fklappan.app.webnotes.ui.overview.OverviewFragment;
 
+@ControllerScope
 @Subcomponent(modules = {ControllerModule.class})
 public interface ControllerComponent {
 

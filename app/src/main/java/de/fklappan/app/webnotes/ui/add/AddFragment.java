@@ -19,6 +19,7 @@ import de.fklappan.app.webnotes.common.BaseFragment;
 import de.fklappan.app.webnotes.common.Injector;
 import de.fklappan.app.webnotes.common.logging.Logger;
 import de.fklappan.app.webnotes.common.mvx.SnackbarProvider;
+import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator;
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider;
 import de.fklappan.app.webnotes.service.NoteService;
 import de.fklappan.app.webnotes.ui.edit.EditContract;
@@ -37,7 +38,8 @@ public class AddFragment extends BaseFragment implements EditContract.ViewListen
     Logger logger;
     @Inject
     SchedulerProvider schedulers;
-
+    @Inject
+    NoteFlowCoordinator noteFlowCoordinator;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -80,7 +82,7 @@ public class AddFragment extends BaseFragment implements EditContract.ViewListen
     public void onSaved() {
         Log.d(LOG_TAG, "onSaved");
         snackbarProvider.showSnackbar(R.string.saved);
-        Navigation.findNavController(getView()).navigateUp();
+        noteFlowCoordinator.showOverview();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

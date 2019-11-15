@@ -11,6 +11,7 @@ import de.fklappan.app.webnotes.common.BaseFragment
 import de.fklappan.app.webnotes.common.Injector
 import de.fklappan.app.webnotes.common.Parameters.EXTRA_NOTE_ID
 import de.fklappan.app.webnotes.common.logging.Logger
+import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator
 import de.fklappan.app.webnotes.common.rx.AppSchedulers
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider
 import de.fklappan.app.webnotes.model.Note
@@ -24,6 +25,7 @@ public class DetailFragment : BaseFragment(), DetailContract.Listener {
     @Inject lateinit var logger: Logger
     @Inject lateinit var noteService: NoteService
     @Inject lateinit var appSchedulers: SchedulerProvider
+    @Inject lateinit var noteFlowCoordinator: NoteFlowCoordinator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         injector.inject(this)
@@ -38,8 +40,6 @@ public class DetailFragment : BaseFragment(), DetailContract.Listener {
     }
 
     override fun onEditClicked() {
-        val bundle = Bundle()
-        bundle.putLong(EXTRA_NOTE_ID, detailPresenter.getNote().id)
-        Navigation.findNavController(detailView.rootView).navigate(R.id.editFragment, bundle)
+        noteFlowCoordinator.editNote(detailPresenter.getNote().id)
     }
 }
