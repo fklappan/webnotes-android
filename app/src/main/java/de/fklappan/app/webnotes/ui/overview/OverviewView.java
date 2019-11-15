@@ -33,7 +33,6 @@ public class OverviewView extends BaseObservableMvxView<OverviewContract.Listene
 
     public OverviewView(LayoutInflater inflater, ViewGroup viewGroup) {
         rootView = inflater.inflate(R.layout.overview, viewGroup);
-
         initView();
     }
 

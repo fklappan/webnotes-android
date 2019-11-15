@@ -2,6 +2,7 @@ package de.fklappan.app.webnotes.ui.edit;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,10 @@ import static de.fklappan.app.webnotes.common.Parameters.EXTRA_NOTE_ID;
 public class EditFragment extends BaseFragment {
 
     private static final String LOG_TAG = EditFragment.class.getSimpleName();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // member variables
+
     private EditContract.View editView;
     private EditContract.Presenter editPresenter;
     private SnackbarProvider snackbarProvider;
@@ -36,6 +41,9 @@ public class EditFragment extends BaseFragment {
     @Inject
     NoteFlowCoordinator noteFlowCoordinator;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // android overrides
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -48,6 +56,7 @@ public class EditFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getInjector().inject(this);
+        Log.d(LOG_TAG, "onCreateView");
         editView = new EditView(inflater, null);
 
         editPresenter = new EditPresenter(editView, getArguments().getLong(EXTRA_NOTE_ID), noteRepository, schedulers, logger, snackbarProvider, noteFlowCoordinator);

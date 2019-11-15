@@ -19,10 +19,11 @@ import de.fklappan.app.webnotes.service.NoteService;
 
 public class OverviewFragment extends BaseFragment {
 
+    private static final String LOG_TAG = OverviewFragment.class.getSimpleName();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // member variables
 
-    private static final String LOG_TAG = OverviewFragment.class.getSimpleName();
     private OverviewContract.View overviewView;
     private OverviewContract.Presenter presenter;
 

@@ -14,15 +14,24 @@ import de.fklappan.app.webnotes.model.Note;
 
 public class EditView extends BaseObservableMvxView<EditContract.ViewListener> implements EditContract.View {
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // member variables
+
     private View rootView;
     private EditText editTextTitle;
     private EditText editTextContent;
     private SpeedDialView fabView;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // construction
+
     public EditView(LayoutInflater inflater, ViewGroup viewGroup) {
         rootView = inflater.inflate(R.layout.editview, viewGroup);
         initView();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // member methods
 
     private void initView() {
         editTextTitle = rootView.findViewById(R.id.editTextTitle);
@@ -44,11 +53,16 @@ public class EditView extends BaseObservableMvxView<EditContract.ViewListener> i
         });
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // base class overrides
 
     @Override
     public View getRootView() {
         return rootView;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MvxView impl
 
     @Override
     public Bundle getViewState() {
@@ -65,6 +79,9 @@ public class EditView extends BaseObservableMvxView<EditContract.ViewListener> i
         editTextTitle.setText(note.getTitle());
         editTextContent.setText(note.getContent());
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // EditContract.View impl
 
     @Override
     public String getTitle() {

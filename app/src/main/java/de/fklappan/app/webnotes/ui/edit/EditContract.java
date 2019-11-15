@@ -16,7 +16,6 @@ public interface EditContract {
     }
 
     interface Presenter extends MvxPresenter {
-        void onSaveRequested();
     }
 
     interface ViewListener {

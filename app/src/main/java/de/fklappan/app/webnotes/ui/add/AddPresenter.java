@@ -14,6 +14,10 @@ import io.reactivex.disposables.CompositeDisposable;
 public class AddPresenter implements AddContract.Presenter, EditContract.ViewListener {
 
     private static final String LOG_TAG = AddPresenter.class.getSimpleName();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // member variables
+
     private EditContract.View view;
     private NoteRepository noteRepository;
     private Logger logger;
@@ -21,6 +25,9 @@ public class AddPresenter implements AddContract.Presenter, EditContract.ViewLis
     private SchedulerProvider schedulers;
     private SnackbarProvider snackbarProvider;
     private NoteFlowCoordinator noteFlowCoordinator;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // construction
 
     public AddPresenter(EditContract.View view, NoteRepository noteRepository,
                         SchedulerProvider schedulers, Logger logger, SnackbarProvider snackbarProvider,
@@ -33,6 +40,9 @@ public class AddPresenter implements AddContract.Presenter, EditContract.ViewLis
         this.noteFlowCoordinator = noteFlowCoordinator;
         view.registerListener(this);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // methods
 
     private void saveNote(Note note) {
         disposables.add(noteRepository.saveNote(note.getTitle(), note.getContent())
@@ -49,26 +59,6 @@ public class AddPresenter implements AddContract.Presenter, EditContract.ViewLis
                 }));
     }
 
-    @Override
-    public void cleanup() {
-        view.unregisterListener(this);
-        disposables.dispose();
-        view = null;
-    }
-
-    @Override
-    public void onSaveRequested() {
-        logger.d(LOG_TAG, "onSaveRequested");
-        if (!checkInput()) {
-            logger.w(LOG_TAG, "invalid input");
-            return;
-        }
-        Note note = new Note();
-        note.setTitle(view.getTitle());
-        note.setContent(view.getContent());
-        saveNote(note);
-    }
-
     private boolean checkInput() {
         if (StringUtil.nullOrEmpty(view.getTitle())) {
             logger.e(LOG_TAG, "no title");
@@ -82,12 +72,31 @@ public class AddPresenter implements AddContract.Presenter, EditContract.ViewLis
         return true;
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MvxPresenter impl
+
+    @Override
+    public void cleanup() {
+        view.unregisterListener(this);
+        disposables.dispose();
+        view = null;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // EditContract.ViewListener impl
 
     @Override
     public void onSaveClicked() {
-        onSaveRequested();
+        logger.d(LOG_TAG, "onSaveRequested");
+        if (!checkInput()) {
+            logger.w(LOG_TAG, "invalid input");
+            return;
+        }
+        Note note = new Note();
+        note.setTitle(view.getTitle());
+        note.setContent(view.getContent());
+        saveNote(note);
     }
 
 }

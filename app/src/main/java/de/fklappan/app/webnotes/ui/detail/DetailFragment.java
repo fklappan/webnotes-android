@@ -46,7 +46,6 @@ public class DetailFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         detailView = new DetailView(inflater, null);
-
         detailPresenter = new DetailPresenter(detailView, getArguments().getLong(EXTRA_NOTE_ID), noteService, appSchedulers, logger, noteFlowCoordinator);
 
         return detailView.getRootView();
