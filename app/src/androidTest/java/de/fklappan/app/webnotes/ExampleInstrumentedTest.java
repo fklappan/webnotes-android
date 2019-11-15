@@ -4,14 +4,11 @@ import android.content.Context;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.InstrumentationRegistry;
-import androidx.test.espresso.Espresso;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.fklappan.app.webnotes.common.Injector;
-import de.fklappan.app.webnotes.service.NoteRepository;
 import de.fklappan.app.webnotes.ui.overview.OverviewFragment;
 
 import static org.junit.Assert.*;
@@ -26,8 +23,6 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
         // Context of the app under test.
-
-        NoteRepository noteRepository = Injector.getNoteRepository();
 
         Context appContext = InstrumentationRegistry.getTargetContext();
 

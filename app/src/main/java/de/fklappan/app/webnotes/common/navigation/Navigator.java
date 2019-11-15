@@ -3,7 +3,6 @@ package de.fklappan.app.webnotes.common.navigation;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import de.fklappan.app.webnotes.R;
 
@@ -14,10 +13,6 @@ public class Navigator {
     private NavController navController;
 
     public Navigator() {
-    }
-
-    public Navigator(NavController navController) {
-        setNavController(navController);
     }
 
     public void cleanup() {
