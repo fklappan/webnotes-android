@@ -13,19 +13,26 @@ import de.fklappan.app.webnotes.common.mvx.BaseObservableMvxView;
 import de.fklappan.app.webnotes.ui.edit.EditContract;
 import de.fklappan.app.webnotes.model.Note;
 
-public class AddView {
-        /*
-        extends BaseObservableMvxView implements AddContract.View {
+public class AddView extends BaseObservableMvxView<AddContract.ViewListener> implements AddContract.View {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // member variables
 
     private View rootView;
     private EditText editTextTitle;
     private EditText editTextContent;
     private SpeedDialView fabView;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // construction
+
     public AddView(LayoutInflater inflater, ViewGroup viewGroup) {
         rootView = inflater.inflate(R.layout.editview, viewGroup);
         initView();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // member methods
 
     private void initView() {
         editTextTitle = rootView.findViewById(R.id.editTextTitle);
@@ -34,6 +41,9 @@ public class AddView {
         fabView.setOnChangeListener(new SpeedDialView.OnChangeListener() {
             @Override
             public boolean onMainActionSelected() {
+                for (AddContract.ViewListener listener : listeners) {
+                    listener.onSaveClicked();
+                }
                 return false;
             }
 
@@ -44,11 +54,16 @@ public class AddView {
         });
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // base class overrides
 
     @Override
     public View getRootView() {
         return rootView;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MvxView impl
 
     @Override
     public Bundle getViewState() {
@@ -57,13 +72,11 @@ public class AddView {
 
     @Override
     public void cleanup() {
+
     }
 
-    @Override
-    public void onData(Note note) {
-        editTextTitle.setText(note.getTitle());
-        editTextContent.setText(note.getContent());
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // EditContract.View impl
 
     @Override
     public String getTitle() {
@@ -74,9 +87,4 @@ public class AddView {
     public String getContent() {
         return editTextContent.getText().toString();
     }
-
-    @Override
-    public void setPresenter(AddContract.Presenter presenter) {
-    }
-    */
 }

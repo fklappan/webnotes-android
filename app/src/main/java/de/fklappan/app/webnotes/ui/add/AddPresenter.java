@@ -8,17 +8,16 @@ import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator;
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider;
 import de.fklappan.app.webnotes.model.Note;
 import de.fklappan.app.webnotes.service.NoteRepository;
-import de.fklappan.app.webnotes.ui.edit.EditContract;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class AddPresenter implements AddContract.Presenter, EditContract.ViewListener {
+public class AddPresenter implements AddContract.Presenter, AddContract.ViewListener {
 
     private static final String LOG_TAG = AddPresenter.class.getSimpleName();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // member variables
 
-    private EditContract.View view;
+    private AddContract.View view;
     private NoteRepository noteRepository;
     private Logger logger;
     private CompositeDisposable disposables = new CompositeDisposable();
@@ -29,7 +28,7 @@ public class AddPresenter implements AddContract.Presenter, EditContract.ViewLis
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // construction
 
-    public AddPresenter(EditContract.View view, NoteRepository noteRepository,
+    public AddPresenter(AddContract.View view, NoteRepository noteRepository,
                         SchedulerProvider schedulers, Logger logger, SnackbarProvider snackbarProvider,
                         NoteFlowCoordinator noteFlowCoordinator) {
         this.view = view;

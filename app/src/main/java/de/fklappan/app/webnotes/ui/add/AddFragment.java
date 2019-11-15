@@ -28,7 +28,7 @@ public class AddFragment extends BaseFragment {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // member variables
 
-    private EditContract.View view;
+    private AddContract.View view;
     private AddContract.Presenter presenter;
     private SnackbarProvider snackbarProvider;
     @Inject
@@ -57,7 +57,7 @@ public class AddFragment extends BaseFragment {
         Log.d(LOG_TAG, "onCreateView");
         super.onCreateView(inflater, container, savedInstanceState);
 
-        view = new EditView(inflater, null);
+        view = new AddView(inflater, null);
         presenter = new AddPresenter(view, noteRepository, schedulers, logger, snackbarProvider, noteFlowCoordinator);
 
         return view.getRootView();
