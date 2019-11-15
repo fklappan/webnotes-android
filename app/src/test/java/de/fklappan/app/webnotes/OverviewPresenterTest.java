@@ -14,6 +14,7 @@ import java.util.List;
 
 import de.fklappan.app.webnotes.common.TestLogger;
 import de.fklappan.app.webnotes.common.TestSchedulers;
+import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator;
 import de.fklappan.app.webnotes.model.Note;
 import de.fklappan.app.webnotes.service.NoteRepository;
 import de.fklappan.app.webnotes.ui.overview.OverviewContract;
@@ -28,6 +29,9 @@ public class OverviewPresenterTest {
 
     @Mock
     OverviewView view;
+
+    @Mock
+    NoteFlowCoordinator noteFlowCoordinator;
 
     @Test
     public void testPresenterSetup() {
@@ -65,7 +69,7 @@ public class OverviewPresenterTest {
             }
         };
 
-        OverviewContract.Presenter uut = new OverviewPresenter(view, testRepository, new TestSchedulers(), new TestLogger());
+        OverviewContract.Presenter uut = new OverviewPresenter(view, testRepository, new TestSchedulers(), new TestLogger(), noteFlowCoordinator);
         Mockito.verify(view, Mockito.atLeastOnce()).onLoading();
         ArgumentCaptor<List> captor = ArgumentCaptor.forClass(List.class);
         Mockito.verify(view, Mockito.times(1)).onData(captor.capture());
