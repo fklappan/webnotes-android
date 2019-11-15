@@ -2,6 +2,7 @@ package de.fklappan.app.webnotes.ui.detail
 
 
 import de.fklappan.app.webnotes.common.logging.Logger
+import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider
 import de.fklappan.app.webnotes.model.Note
 import de.fklappan.app.webnotes.service.NoteRepository
@@ -10,14 +11,16 @@ import io.reactivex.disposables.CompositeDisposable
 class DetailPresenter(private var view: DetailContract.View?, noteId: Long?,
                       private val noteRepository: NoteRepository,
                       private val schedulers: SchedulerProvider,
-                      private val logger: Logger)
-    : DetailContract.Presenter {
+                      private val logger: Logger,
+                      private val noteFlowCoordinator: NoteFlowCoordinator)
+    : DetailContract.Presenter, DetailContract.ViewListener {
 
     private val disposables = CompositeDisposable()
     private lateinit var note: Note
 
     init {
         loadNote(noteId)
+        view!!.registerListener(this)
     }
 
     private fun loadNote(id: Long?) {
@@ -38,6 +41,7 @@ class DetailPresenter(private var view: DetailContract.View?, noteId: Long?,
     }
 
     override fun cleanup() {
+        view!!.unregisterListener(this)
         disposables.dispose()
         view = null
     }
@@ -49,6 +53,13 @@ class DetailPresenter(private var view: DetailContract.View?, noteId: Long?,
 
     override fun getNote(): Note {
         return note
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // DetailContract.ViewListener impl
+
+    override fun onEditClicked() {
+        noteFlowCoordinator.editNote(getNote().id)
     }
 
 }

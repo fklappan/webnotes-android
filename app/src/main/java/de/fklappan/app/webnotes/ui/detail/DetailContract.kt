@@ -8,7 +8,7 @@ interface DetailContract {
 
     // TODO 15.06.2019 Flo i consider it bad practice to mix languages in one project,
     //  so move back to java for the webnotes project. kotlin will be used in an other project
-    interface View : ObservableMvxView<Listener> {
+    interface View : ObservableMvxView<ViewListener> {
 
         fun setTitle(title: String)
 
@@ -22,7 +22,7 @@ interface DetailContract {
         fun getNote(): Note
     }
 
-    interface Listener {
+    interface ViewListener {
         fun onEditClicked()
     }
 }

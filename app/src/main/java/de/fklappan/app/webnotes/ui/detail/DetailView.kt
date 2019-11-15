@@ -2,7 +2,6 @@ package de.fklappan.app.webnotes.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.leinardi.android.speeddial.SpeedDialView
@@ -10,7 +9,7 @@ import com.leinardi.android.speeddial.SpeedDialView
 import de.fklappan.app.webnotes.R
 import de.fklappan.app.webnotes.common.mvx.BaseObservableMvxView
 
-class DetailView(inflater: LayoutInflater, viewGroup: ViewGroup?) : BaseObservableMvxView<DetailContract.Listener>(), DetailContract.View {
+class DetailView(inflater: LayoutInflater, viewGroup: ViewGroup?) : BaseObservableMvxView<DetailContract.ViewListener>(), DetailContract.View {
 
     private lateinit var textViewTitle: TextView
     private lateinit var textViewContent: TextView

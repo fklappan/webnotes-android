@@ -1,15 +1,17 @@
 package de.fklappan.app.webnotes.ui.add;
 
-import de.fklappan.app.webnotes.common.logging.Logger;
+import de.fklappan.app.webnotes.R;
 import de.fklappan.app.webnotes.common.StringUtil;
-import de.fklappan.app.webnotes.common.mvx.BaseObservableMvxPresenter;
+import de.fklappan.app.webnotes.common.logging.Logger;
+import de.fklappan.app.webnotes.common.mvx.SnackbarProvider;
+import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator;
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider;
-import de.fklappan.app.webnotes.ui.edit.EditContract;
 import de.fklappan.app.webnotes.model.Note;
 import de.fklappan.app.webnotes.service.NoteRepository;
+import de.fklappan.app.webnotes.ui.edit.EditContract;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class AddPresenter extends BaseObservableMvxPresenter<EditContract.PresenterListener> implements AddContract.Presenter {
+public class AddPresenter implements AddContract.Presenter, EditContract.ViewListener {
 
     private static final String LOG_TAG = AddPresenter.class.getSimpleName();
     private EditContract.View view;
@@ -17,12 +19,19 @@ public class AddPresenter extends BaseObservableMvxPresenter<EditContract.Presen
     private Logger logger;
     private CompositeDisposable disposables = new CompositeDisposable();
     private SchedulerProvider schedulers;
+    private SnackbarProvider snackbarProvider;
+    private NoteFlowCoordinator noteFlowCoordinator;
 
-    public AddPresenter(EditContract.View view, NoteRepository noteRepository, SchedulerProvider schedulers, Logger logger) {
+    public AddPresenter(EditContract.View view, NoteRepository noteRepository,
+                        SchedulerProvider schedulers, Logger logger, SnackbarProvider snackbarProvider,
+                        NoteFlowCoordinator noteFlowCoordinator) {
         this.view = view;
         this.noteRepository = noteRepository;
         this.schedulers = schedulers;
         this.logger = logger;
+        this.snackbarProvider = snackbarProvider;
+        this.noteFlowCoordinator = noteFlowCoordinator;
+        view.registerListener(this);
     }
 
     private void saveNote(Note note) {
@@ -32,9 +41,8 @@ public class AddPresenter extends BaseObservableMvxPresenter<EditContract.Presen
         .subscribe(
                 success -> {
                     logger.d(LOG_TAG, "success: " + success);
-                    for(EditContract.PresenterListener listener : listeners) {
-                        listener.onSaved();
-                    }
+                    snackbarProvider.showSnackbar(R.string.saved);
+                    noteFlowCoordinator.showOverview();
                 },
                 err -> {
                     logger.e(LOG_TAG, "error saving note", err);
@@ -43,6 +51,7 @@ public class AddPresenter extends BaseObservableMvxPresenter<EditContract.Presen
 
     @Override
     public void cleanup() {
+        view.unregisterListener(this);
         disposables.dispose();
         view = null;
     }
@@ -71,6 +80,14 @@ public class AddPresenter extends BaseObservableMvxPresenter<EditContract.Presen
             return false;
         }
         return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // EditContract.ViewListener impl
+
+    @Override
+    public void onSaveClicked() {
+        onSaveRequested();
     }
 
 }

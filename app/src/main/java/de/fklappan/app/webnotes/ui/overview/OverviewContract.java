@@ -26,8 +26,5 @@ public interface OverviewContract {
     }
 
     interface Presenter extends MvxPresenter {
-        void onLoadRequest();
-
-        void setView(View view);
     }
 }
