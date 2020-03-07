@@ -19,10 +19,9 @@ import de.fklappan.app.webnotes.common.navigation.NoteFlowCoordinator;
 import de.fklappan.app.webnotes.common.rx.SchedulerProvider;
 import de.fklappan.app.webnotes.service.NoteService;
 
-import static de.fklappan.app.webnotes.common.Parameters.EXTRA_NOTE_ID;
-
 public class EditFragment extends BaseFragment {
 
+    private static String EXTRA_NOTE_ID = "EXTRA_NOTE_ID";
     private static final String LOG_TAG = EditFragment.class.getSimpleName();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +39,14 @@ public class EditFragment extends BaseFragment {
     SchedulerProvider schedulers;
     @Inject
     NoteFlowCoordinator noteFlowCoordinator;
+
+    // creation
+
+    public static Bundle getBundle(long noteId) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(EXTRA_NOTE_ID, noteId);
+        return bundle;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // android overrides

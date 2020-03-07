@@ -1,12 +1,10 @@
 package de.fklappan.app.webnotes.common.navigation;
 
-import android.os.Bundle;
-
 import androidx.navigation.NavController;
 
 import de.fklappan.app.webnotes.R;
-
-import static de.fklappan.app.webnotes.common.Parameters.EXTRA_NOTE_ID;
+import de.fklappan.app.webnotes.ui.detail.DetailFragment;
+import de.fklappan.app.webnotes.ui.edit.EditFragment;
 
 public class Navigator {
 
@@ -28,15 +26,11 @@ public class Navigator {
     }
 
     public void showNote(long noteId) {
-        Bundle bundle = new Bundle();
-        bundle.putLong(EXTRA_NOTE_ID, noteId);
-        navController.navigate(R.id.detailFragment, bundle);
+        navController.navigate(R.id.detailFragment, DetailFragment.getBundle(noteId));
     }
 
     public void editNote(long noteId) {
-        Bundle bundle = new Bundle();
-        bundle.putLong(EXTRA_NOTE_ID, noteId);
-        navController.navigate(R.id.editFragment, bundle);
+        navController.navigate(R.id.editFragment, EditFragment.getBundle(noteId));
     }
 
     public void addNote() {
