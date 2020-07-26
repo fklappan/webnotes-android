@@ -4,7 +4,7 @@ The Android App for the webnotes-backend.
 
 ## Configuration
 
-Some gradle build variables has to be provided to communicate and authenticate against the backend:
+Some gradle build variables have to be provided to communicate and authenticate against the backend:
 
 ### serviceUrl
 
@@ -34,3 +34,6 @@ Example:
 
 **Please note** that in the current development state, the variables can not be set through the app 
 and there will be no proper error messages if one of the variables is not provided.
+
+I recommend to put them into the user scoped gradle.properties file to not accidentially check them into the VCS. 
+Usually the file is saved in HOME/.gradle/gradle.properties. If you have a environment variable GRADLE_HOME defined, the file will be saved there.
