@@ -1,3 +1,5 @@
+**Abandoned** no further development is planned!
+
 # Webnotes-android
 
 The Android App for the webnotes-backend.
